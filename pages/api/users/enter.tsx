@@ -32,60 +32,22 @@ async function handler(
         },
     }); 
 
-    // if(email) {
-    //     user = await client.user.findUnique({
-    //         where: {
-    //             // email: email
-    //             email,
-    //         },
-    //     });
-    //     if(user) console.log("user found")
-    //     if(!user) {
-    //         console.log("create user");
-    //         user = await client.user.create({
-    //             data: {
-    //                 name: "Anonymous",
-    //                 email,
-    //             },
-    //         });
-    //     }
-    //     console.log(user);
-    // }
-    // if(phone) {
-    //     user = await client.user.findUnique({
-    //         where: {
-    //             phone: +phone,
-    //         },
-    //     });
-    //     if(user) console.log("user found")
-    //     if(!user) {
-    //         console.log("create user");
-    //         user = await client.user.create({
-    //             data: {
-    //                 name: "Anonymous",
-    //                 phone: +phone,
-    //             },
-    //         });
-    //     }
-    //     console.log(user);
-    // }
-    
     if(phone) {
-        const message = await twilioClient.messages.create({
-            messagingServiceSid: process.env.TWILIO_MSID,
-            to: process.env.MY_PHONE!,
-            body: `Your login token: ${payload}.`,
-        })
-        console.log(message);
+        // const message = await twilioClient.messages.create({
+        //     messagingServiceSid: process.env.TWILIO_MSID,
+        //     to: process.env.MY_PHONE!,
+        //     body: `Your login token: ${payload}.`,
+        // })
+        // console.log(message);
     } else if(email) {
-        const email = await mail.send({
-            from: "rlaguswo3408@gmail.com",
-            to: "drbird1@naver.com",
-            subject: "Verify your email",
-            text: `Your token is ${payload}`,
-            html: `<strong> Your token is ${payload}</strong>`,
-        })
-        console.log(email);
+        // const email = await mail.send({
+        //     from: "rlaguswo3408@gmail.com",
+        //     to: "drbird1@naver.com",
+        //     subject: "Verify your email",
+        //     text: `Your token is ${payload}`,
+        //     html: `<strong> Your token is ${payload}</strong>`,
+        // })
+        // console.log(email);
     }
     return res.json({
         ok: true,
