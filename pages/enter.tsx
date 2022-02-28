@@ -41,7 +41,7 @@ const Enter: NextPage = () => {
     if(loading) return;
     enter(validForm);
   };
-  const onTokenValid = (validForm: TokenForm) => {
+  const onTokenValid = (validForm:TokenForm) => {
     if(tokenLoading) return;
     confirmToken(validForm);
   }
