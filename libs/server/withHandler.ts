@@ -5,11 +5,13 @@ export interface ResponseType {
     [key: string]: any;
 }
 
-export default function withHandler(
+interface Configtype {
     method:"GET"|"POST"|"DELETE", 
-    fn: ( req: NextApiRequest, res: NextApiResponse) => void,
-    isPrivate: boolean
-) {
+    handler: ( req: NextApiRequest, res: NextApiResponse) => void,
+    isPrivate?: boolean
+}
+
+export default function withHandler({method, isPrivate, handler}: Configtype) {
     return async function (req:NextApiRequest, res:NextApiResponse) : Promise<any> {
         if(req.method !== method) {
             return res.status(405).end();
@@ -18,7 +20,7 @@ export default function withHandler(
             return res.status(401).json({ ok: false, error:"Plz Login!" });
         }
         try {
-            await fn(req, res)
+            await handler(req, res)
         } catch(error) {
             console.log(error);
             return res.status(500).json({error});
