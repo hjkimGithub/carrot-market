@@ -29,7 +29,7 @@ const Enter: NextPage = () => {
   const {register: tokenRegister, handleSubmit: tokenHandleSubmit} =
     useForm<TokenForm>();
   const [method, setMethod] = useState<"email" | "phone">("email");
-  console.log({loading, data, error});
+  // console.log({loading, data, error});
   const onEmailClick = () => {
     reset();
     setMethod("email");
