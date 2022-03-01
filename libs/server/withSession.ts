@@ -11,6 +11,8 @@ declare module "iron-session" {
 const cookieOptions = {
     cookieName: "carrotsession",
     password: process.env.COOKIE_PASSWORD!,
+    // password: process.env.COOKIE_PASSWORD || '',
+    // password: process.env.COOKIE_PASSWORD as string,
 }
 
 export function withApiSession(fn:any) {
