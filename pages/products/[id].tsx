@@ -68,7 +68,7 @@ const ItemDetail: NextPage = () => {
           <h2 className="text-2xl font-bold text-gray-900">Similar items</h2>
           <div className=" mt-6 grid grid-cols-2 gap-4">
             {data?.relatedProducts?.map((product) => (
-              <Link key={product.description} href={`/products/${product?.id}`}>
+              <Link key="singleProductHLINK" href={`/products/${product?.id}`}>
               <a key={product.userId}>
               <div key={product.id}>
                 <div key = {product.image} className="h-56 w-full mb-4 bg-slate-300" />
