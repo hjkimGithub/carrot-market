@@ -27,7 +27,7 @@ const Write: NextPage = () => {
   };
   useEffect(() => {
     if(data && data.ok) {
-      router.push(`${data.post.id}`)
+      router.push(`/community/${data.post.id}`)
     }
   }, [data, router]);
   return (
