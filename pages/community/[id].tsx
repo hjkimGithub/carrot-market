@@ -44,7 +44,8 @@ const CommunityPostDetail: NextPage = () => {
   const {data, mutate} = useSWR<CommunityPostResponse>
   (router.query.id ? `/api/posts/${router.query.id}` : null);
   const [wonder, {loading}] = useMutation(`/api/posts/${router.query.id}/wonder`);
-  const [sendAnswer, {data: answerData, loading: answerLoading}] = useMutation<AnswerResponse>(`/api/posts${router.query.id}/answers`);
+  const [sendAnswer, {data: answerData, loading: answerLoading}] = 
+  useMutation<AnswerResponse>(`/api/posts${router.query.id}/answers`);
   const onWonderClick = () => {
     if(!data) return;
     mutate({
@@ -68,8 +69,9 @@ const CommunityPostDetail: NextPage = () => {
   useEffect(() => {
     if(answerData && answerData.ok) {
       reset();
+      mutate();
     }
-  }, [answerData, reset]);
+  }, [answerData, reset, mutate]);
   return (
     <Layout canGoBack>
       <div>

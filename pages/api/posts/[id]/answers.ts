@@ -15,14 +15,14 @@ async function handler(
   const newAnswer = await client.answer.create({
       data: {
         user: {
-            connect: {
-                id: user?.id
-            },
+          connect: {
+              id: user?.id
+          },
         },
       post: {
-          connect: {
-              id: +id.toString(),
-          },
+        connect: {
+            id: +id.toString(),
+        },
       },
       answer,
     },
