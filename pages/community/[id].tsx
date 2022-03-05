@@ -45,7 +45,7 @@ const CommunityPostDetail: NextPage = () => {
   (router.query.id ? `/api/posts/${router.query.id}` : null);
   const [wonder, {loading}] = useMutation(`/api/posts/${router.query.id}/wonder`);
   const [sendAnswer, {data: answerData, loading: answerLoading}] = 
-  useMutation<AnswerResponse>(`/api/posts${router.query.id}/answers`);
+  useMutation<AnswerResponse>(`/api/posts/${router.query.id}/answers`);
   const onWonderClick = () => {
     if(!data) return;
     mutate({
@@ -139,7 +139,7 @@ const CommunityPostDetail: NextPage = () => {
             </span>
           </div>
         </div>
-        <div className="px-4 my-5 space-y-5">
+        <div key="answersforQuestion" className="px-4 my-5 space-y-5">
           {data?.post?.answers?.map((answer) => <div className="flex items-start space-x-3">
             <div key={answer.id} className="w-8 h-8 bg-slate-200 rounded-full" />
               <div>
