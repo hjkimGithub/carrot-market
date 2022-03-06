@@ -24,14 +24,15 @@ model User {
   updatedAt DateTime @updatedAt
   tokens Token[]
   products Product[]
-  fav Fav[]
   posts Post[]
   answers Answer[]
   wonderings Wondering[]
   writtenReviews  Review[]    @relation(name: "writtenReviews")
   receivedReviews Review[]    @relation(name: "receivedReviews")
+  fav Fav[]
   sales Sale[]
   purchases Purchase[]
+  records Record[]
 }
 
 model Token {
@@ -56,17 +57,8 @@ model Product {
   favs Fav[] 
   sales Sale[]
   purchases Purchase[]
+  records Record[]
 } 
-
-model Fav {
-  id Int @id @default(autoincrement())
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId Int
-  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
 
 model Post {
   id Int @id @default(autoincrement())
@@ -131,4 +123,31 @@ model Purchase {
   productId Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Fav {
+  id Int @id @default(autoincrement())
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Record {
+  id Int @id @default(autoincrement())
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId Int
+  createdAt DateTime @default(now())
+  kind Kind
+  updatedAt DateTime @updatedAt
+}
+
+enum Kind {
+  Purchase
+  Sale
+  Fav
 }
