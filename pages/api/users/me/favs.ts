@@ -13,7 +13,10 @@ async function handler(
   const favs = await client.fav.findMany({
       where: {
           userId: user?.id,
-      }
+      },
+      include: {
+          product: true,
+      },
   })
   res.json({
     ok: true,
