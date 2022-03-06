@@ -7,7 +7,7 @@ import Head from "next/head";
 import useSWR from "swr";
 import { Product } from "@prisma/client";
 
-interface ProductwithCount extends Product {
+export interface ProductwithCount extends Product {
   _count: any;
 }
 
