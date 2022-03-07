@@ -49,7 +49,8 @@ async function handler(
         },
       });
       res.json({ok: true});
-    } else if(phone && phone !== currentUser?.phone) {
+    }
+    if(phone && phone !== currentUser?.phone) {
       const alreadyExists = Boolean(
         await client.user.findUnique({
           where: {
