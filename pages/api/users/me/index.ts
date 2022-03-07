@@ -17,6 +17,76 @@ async function handler(
     });
   } 
   if(req.method === "POST"){ 
+    const {session: {user}, body: {email, phone, name}, } = req;
+    const currentUser =await client.user.findUnique({
+      where: {
+        id: user?.id,
+      },
+    });
+    if(email && email !== currentUser?.email) {
+      const alreadyExists = Boolean(
+        await client.user.findUnique({
+          where: {
+            email,
+          },
+          select: {
+            id: true,
+          },
+        })
+      );
+      if(alreadyExists){
+        return res.json({
+          ok: false,
+          error: "Email already in use!!!"
+        });
+      }
+      await client.user.update({
+        where: {
+          id: user?.id,
+        },
+        data: {
+          email,
+        },
+      });
+      res.json({ok: true});
+    } else if(phone && phone !== currentUser?.phone) {
+      const alreadyExists = Boolean(
+        await client.user.findUnique({
+          where: {
+            phone,
+          },
+          select: {
+            id: true,
+          },
+        })
+      );
+      if(alreadyExists){
+        return res.json({
+          ok: false,
+          error: "Phonenumber already in use!!!"
+        })
+      }
+      await client.user.update({
+        where: {
+          id: user?.id,
+        },
+        data: {
+          phone,
+        },
+      });
+      res.json({ok: true});
+    }
+    if (name) {
+      await client.user.update({
+        where: {
+          id: user?.id,
+        },
+        data: {
+          name,
+        },
+      });
+    }
+    res.json({ok: true});
   }
 }
 
