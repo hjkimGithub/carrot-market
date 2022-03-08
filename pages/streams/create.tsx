@@ -17,20 +17,21 @@ interface CreateForm {
 
 interface CreateResponse {
   ok: boolean;
-  stream: Stream
+  stream: Stream;
 }
 
 const Create: NextPage = () => {
   const router = useRouter();
-  const [createStream, {loading, data}] = useMutation<CreateResponse>(`/api/streams`);
+  const [createStream, {loading, data}] = 
+  useMutation<CreateResponse>(`/api/streams`);
   const {register, handleSubmit} = useForm<CreateForm>();
   const onValid = (form: CreateForm) => {
     if(loading) return;
     createStream(form);
-  }
+  };
   useEffect(() => {
     if(data && data.ok) {
-      router.push(`/streams/${data.stream.id}`);
+      router.push(`/streams/${data?.stream.id}`);
     }
   }, [data, router]);
   return (
