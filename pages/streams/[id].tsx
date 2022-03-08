@@ -6,10 +6,25 @@ import { useRouter } from "next/router";
 import { Stream } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import useMutation from "@libs/client/useMutation";
+import useUser from "@libs/client/useUser";
+import { useEffect } from "react";
+
+interface StreamMessage {
+  message: string;
+  id: number;
+  user: {
+    avatar?: string;
+    id: number;
+  };
+}
+
+interface StreamWithMessages extends Stream {
+  messages: StreamMessage[]
+}
 
 interface StreamResponse {
   ok: true;
-  stream: Stream;
+  stream: StreamWithMessages;
 }
 
 interface MessageForm {
@@ -17,9 +32,10 @@ interface MessageForm {
 }
 
 const Stream: NextPage = () => {
+  const {user} = useUser();
   const router = useRouter();
   const {register, handleSubmit, reset} = useForm<MessageForm>()
-  const { data } = useSWR<StreamResponse>(
+  const { data, mutate } = useSWR<StreamResponse>(
     router.query.id ? `/api/streams/${router.query.id}` : null
   );
   const [sendMessage, {loading, data:sendMessageData}] = 
@@ -29,6 +45,11 @@ const Stream: NextPage = () => {
     reset();
     sendMessage(form);
   };
+  useEffect(() => {
+    if(sendMessageData && sendMessageData.ok){
+      mutate();
+    }
+  }, [sendMessageData, mutate]);
   return (
     <Layout canGoBack>
       <div className="py-10 px-4  space-y-4">
@@ -45,9 +66,9 @@ const Stream: NextPage = () => {
         <div>
           <h2 className="text-2xl font-bold text-gray-900">Live Chat</h2>
           <div className="py-10 pb-16 h-[50vh] overflow-y-scroll  px-4 space-y-4">
-            <Message message="Hi how much are you selling them for?" />
-            <Message message="I want ￦20,000" reversed />
-            <Message message="미쳤어" />
+            {data?.stream.messages.map((message) => 
+            <Message key={message.id} message={message.message} reversed={message.user.id === user?.id}/>
+            )}
           </div>
           <div className="fixed py-2 bg-white  bottom-0 inset-x-0">
             <form onSubmit={handleSubmit(onValid)} className="flex relative max-w-md items-center  w-full mx-auto">
