@@ -41,17 +41,22 @@ const EditProfile: NextPage = () => {
     if(email === '' && phone === '' && name === ''){
       setError("formErrors", {message:"Email OR Phone number are required!!!"});
     }
-    if(avatar && avatar.length > 0) {
+    if(avatar && avatar.length > 0 && user) {
       // ask for CF URL
-      const cloudflareRequest = await (await fetch(`/api/files`)).json();
-      console.log(cloudflareRequest);
+      const {uploadURL} = await (await fetch(`/api/files`)).json();
       // upload file to CF URL
-      return;
+      const form = new FormData();
+      form.append("file", avatar[0], user?.id + "");
+      const {result: {id}}= await (await fetch(uploadURL, {
+        method: "POST",
+        body: form,
+      })).json();
       editProfile({
         email, 
         phone, 
         name, 
         // avatarUrl: CF URL
+        avatarId: id,
       });
     } else {
       editProfile({email, phone, name, });
