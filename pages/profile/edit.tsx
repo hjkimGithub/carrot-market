@@ -34,6 +34,7 @@ const EditProfile: NextPage = () => {
     if(user?.name) setValue("name", user.name);
     if(user?.email) setValue("email", user.email);
     if(user?.phone) setValue("phone", user.phone);
+    if(user?.avatar) setAvatarPreview(`https://imagedelivery.net/SInOkXlcrUS2Z98JsMiyVQ/${user?.avatar}/public`);
   }, [user, setValue]);
   const [editProfile, {data, loading}] = useMutation<EditProfileResponse>(`/api/users/me`);
   const onValid = async ({email, phone, name, avatar}:EditProfileForm) => {
