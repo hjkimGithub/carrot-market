@@ -16,36 +16,6 @@ async function handler(
     where: {
       id: +id.toString(),
     },
-    // include: { // not secure, user can see important infos
-    select: {
-      // should specify things you want to show in api
-      id: true,
-      createdAt: true,
-      updatedAt: true,
-      name: true,
-      description: true,
-      price: true,
-      userId: true,
-      cloudflareId: true,
-      messages: {
-        select: {
-          id: true,
-          message: true,
-          user: {
-            select: {
-              avatar: true,
-              id: true,
-            },
-          },
-        },
-      },
-    },
-  });
-  const isOwner = stream?.userId === user?.id
-  const streamOwner = await client.stream.findUnique({
-    where: {
-      id: +id.toString(),
-    },
     include: {
       messages: {
         select: {
@@ -61,7 +31,12 @@ async function handler(
       },
     },
   });
-  res.json({ ok: true, stream: isOwner ? streamOwner : stream });
+  const isOwner = stream?.userId === user?.id
+  if (stream && !isOwner) {
+    stream.cloudflareKey = "xxxxx";
+    stream.cloudflareUrl = "xxxxx";
+  }
+  res.json({ ok: true, stream});
 }
 
 export default withApiSession(
