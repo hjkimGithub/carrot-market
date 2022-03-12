@@ -76,7 +76,9 @@ export async function getServerSideProps() {
   const products = await client?.product.findMany({});
   // console.log(products);
   return {
-    props: {
+    props: { 
+      // products
+      // nextjs cannot read date format in prisma
       products: JSON.parse(JSON.stringify(products)),
     },
   };
