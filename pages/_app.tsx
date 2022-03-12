@@ -12,11 +12,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       <div className="w-full max-w-xl mx-auto">
         <Component {...pageProps} />
       </div>
+      {/* 
       <Script
         src="https://developers.kakao.com/sdk/js/kakao.js"
-        // strategy='beforeInteractive'
-        // strategy='afterInteractive'
-        strategy="lazyOnload"
+        strategy="lazyOnload" // beforeInteractive, afterInterative, lazyOnload
       />
       <Script src="https://connect.facebook.net/en_US/sdk.js" onLoad={() => {
         window.fbAsyncInit = function () {
@@ -27,9 +26,9 @@ function MyApp({ Component, pageProps }: AppProps) {
             version: "v13.0",
           });
         };
-      }}
-     
-      />
+      }}    
+      /> 
+      */}
     </SWRConfig>
   );
 }
