@@ -76,7 +76,7 @@ const Stream: NextPage = () => {
   //   }
   // }, [sendMessageData, mutate]);
   return (
-    <Layout canGoBack>
+    <Layout canGoBack seoTitle="라이브 스트림">
       <div className="py-10 px-4  space-y-4">
         <div className="w-full bg-slate-300 aspect-video">
           {data?.stream.cloudflareId ? <iframe
