@@ -39,6 +39,11 @@ const ItemDetail: NextPage<ItemDetailResponse> = ({product, relatedProducts, isL
     unbound: 해당 화면 외의 데이터를 변경
     */
   }
+  if(router.isFallback) {
+    return <Layout title="loading..">
+      <span>blocking true</span>
+    </Layout>
+  }
   return (
     <Layout canGoBack seoTitle="Product Detail">
       <div className="px-4  py-4">
@@ -141,7 +146,9 @@ const ItemDetail: NextPage<ItemDetailResponse> = ({product, relatedProducts, isL
 export const getStaticPaths: GetStaticPaths = () => {
   return {
     paths: [],
-    fallback: "blocking"
+    fallback:true,
+    // fallback:false
+    // fallback:"blocking"
   }
 }
 
